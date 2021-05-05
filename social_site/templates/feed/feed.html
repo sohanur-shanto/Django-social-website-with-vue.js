@@ -1,0 +1,109 @@
+{% extends 'core/base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+
+
+    <div class="container" id="feedapp">
+        <div class="columns">
+            <div class="column is-12">
+                <div class="wrapper-form">
+                    <form v-on:submit.prevent="submitOink()" onsubmit="return false;">
+                        <div class="field">
+                            <div class="control">
+                                <textarea class="textarea" v-model="body" placeholder="What are you Trilling?"></textarea>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-dark">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                
+                </div>
+
+                <center>
+
+                <div class="wrapper-oinks">
+                    {% for oink in oinks %}
+
+                    <div class="oink">
+                        <p class="name">{{ oink.created_by.username }} <p class="info">{{ oink.created_at|naturaltime }}</p></p>
+                        <p class="mt-5">{{ oink.body }}</p><br>
+                    </div>
+                      
+                    {% endfor %}
+
+                    <div class="oink" v-for="oink in oinks">
+                        <p class="name">[[oink.oinker]]</p>
+                        <p> [[ oink.body ]]</p>
+                        <p class="info">[[ oink.created_at ]]</p>
+                    </div>
+                </div>
+
+                </center>
+
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+    new Vue({
+
+        el: '#feedapp',
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                oinks: [],
+                body: '',
+                oinker: '{{request.user.username}}',
+                created_at: 'Now'
+            }
+        },
+
+        methods: {
+            submitOink(){
+                console.log('submitOink');
+
+                if (this.body.length > 0){
+                    var oink = {
+                        'body': this.body,
+                        'oinker': this.oinker,
+                        'created_at': this.created_at
+                    };
+
+                    this.oinks.unshift(oink);
+
+                    fetch('/api/add_oink/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(oink)
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                }
+
+                this.body = '';
+            }
+        }
+    })
+
+</script>
+
+{% endblock %}

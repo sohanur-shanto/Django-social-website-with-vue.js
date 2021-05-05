@@ -1,0 +1,170 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<center>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-12">
+                
+                <h1 class="title">Welcome to Triller</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <h1><div class="mt-5" id="myDiv"></div></h1>
+
+    </center>
+    <style>
+        body {
+            color: #3812df;
+            font-size: 1em;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+    </style>
+    <script>
+        function showDateTime() {
+            var myDiv = document.getElementById("myDiv");
+          
+            var date = new Date();
+            var dayList = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            var monthNames = [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December"
+            ];
+            var dayName = dayList[date.getDay()];
+            var monthName = monthNames[date.getMonth()];
+            var today = `${dayName}, ${monthName} ${date.getDate()}, ${date.getFullYear()}`;
+          
+            var hour = date.getHours();
+            var min = date.getMinutes();
+            var sec = date.getSeconds();
+          
+            var time = hour + ":" + min + ":" + sec;
+            myDiv.innerText = `Today is  ${today}. Time is ${time}`;
+          }
+          setInterval(showDateTime, 1000);
+          
+    </script>
+
+
+
+	<style type="text/css">
+		*{
+			margin: 0;
+		}
+		.map{
+			background-color: ##edfffb;
+			position: relative;
+            color: #000;
+		}
+		.map img{
+			opacity: .4;
+		}
+		.map span{
+			position: absolute;
+			width: 15px;
+			height: 15px;
+			border-radius: 50px;
+			top: 50%;
+			left: 20%;
+			background-color: #fff;
+
+			/*Now i create highlight animation*/
+			animation: highlight 1.5s linear infinite;
+		}
+
+		@keyframes highlight{
+			100%{
+				transform: scale(1.5);
+				opacity: 0;
+			}
+		}
+		
+
+		/*Same thing i set different location*/
+		.map .marker2{
+			left: 70%;
+			top: 20%;
+			animation-delay: .7s;
+            color: #000;
+
+		}
+		.map .marker3{
+			left: 55%;
+			top: 50%;
+			animation-delay: 1s;
+            color: #000;
+		}
+		.map .marker4{
+			left: 10%;
+			top: 30%;
+			animation-delay: .7s;
+            color: #000;
+		}
+		
+		.map .marker6{
+			left: 80%;
+			top: 30%;
+            color: #000;
+            nimation-delay: 0.8s;
+		}
+
+        .map .marker7{
+			left: 50%;
+			top: 20%;
+            animation-delay: 0.3s;
+            color: #000;
+		}
+
+        .map .marker8{
+			left: 90%;
+			top: 10%;
+            animation-delay: .7s;
+            color: #000;
+		}
+
+        .map .marker9{
+			right: 92%;
+			top: 15%;
+            animation-delay: .2s;
+            color: #000;
+		}
+		
+		/*You can also add loation name*/
+	</style>
+</head>
+<body>
+
+
+<div class="map mt-5">
+	<img src="{% static 'images\world-map-146505_1280.png' %}">
+	<span class="marker1"><i class="fa fa-map-marker" style="font-size:24px"></i></span>
+	<span class="marker2"><i class="fa fa-map-marker" style="font-size:24px"></i></span>
+	<span class="marker3"><i class="fa fa-map-marker" style="font-size:24px"></i></span>
+	<span class="marker4"><i class="fa fa-map-marker" style="font-size:24px"></i></span>
+	<span class="marker6"><i style="font-size:24px" class="fa">&#xf041;</i></span>
+    <span class="marker7"><i style="font-size:24px" class="fa">&#xf041;</i></span>
+    <span class="marker8"><i style="font-size:24px" class="fa">&#xf041;</i></span>
+    <span class="marker9"><i style="font-size:24px" class="fa">&#xf041;</i></span>
+</div>
+
+
+
+
+{% endblock %}

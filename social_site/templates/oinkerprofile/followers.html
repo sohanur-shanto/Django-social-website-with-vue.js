@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="columns">
+            <div class="column is-12">
+                    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+                    
+                
+       
+                <strong><p class="ml-5"><u> Followers </u>- {{ user.oinkerprofile.followed_by.count }}</p></strong>
+            </div>
+        </div>
+ 
+
+        <div class="columns">
+            <div class="column is-8">
+                {% for oinker in user.oinkerprofile.followed_by.all %}
+          
+
+                <table class="table table-searchable table-striped table-bordered table-hover table-responsive">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><a href="{% url 'oinkerprofile' oinker.user.username %}">{{ oinker.user.username }}</a></td>
+
+                </td>
+            </tr>
+        
+                {% empty %}
+                
+                {% if request.user == user %}
+                 <p>Sorry, you don't have any followers!</p>
+                {% else %}
+                <p>{{user.username}} doesn't have any followers!</p>
+                    
+                {% endif %}
+                    
+                
+                  
+                {% endfor %}
+
+               
+
+           
+          
+
+    </div>
+
+
+
+
+
+
+{% endblock %}

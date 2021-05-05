@@ -1,0 +1,83 @@
+{% extends 'core/base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+
+<h1 class=""><strong>Search the entire web</strong></h1>
+
+<script async src="https://cse.google.com/cse.js?cx=42a796e70545b57a3"></script>
+<div class="gcse-search"></div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-12">
+                
+                
+                <hr>
+                <h1 class=""><strong>Search by username</strong></h1>
+                <form method="get" class="mt-5" action="{% url 'search' %}">
+                    <div class="field">
+                        <div class="control">
+                            <input type="text" class="input" name="query" value="{{ query }}" placeholder="Enter username">
+                        </div>
+                    </div>
+
+                    <div class="filed">
+                        <div class="control"> 
+
+                            <button class="button is-dark">Search</button>
+                        </div>
+                    </div>
+
+                </form>
+                <hr>
+
+                <p class="ml-5 mt-5"><u> Search term:</u>  <strong>'{{ query }}'
+                </strong></p>
+<center>
+                <div class="search-results">
+
+                    <strong><u> Search results</u></strong>
+                    {% for oinker in oinkers %}
+                    <table class="table table-searchable table-striped table-bordered table-hover table-responsive mt-5">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Username</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td><a href="{% url 'oinkerprofile' oinker.username %}"> {{ oinker.username }}</a></td>
+    
+                    </td>
+                </tr>
+
+       
+                    {% endfor %}
+                </center>
+                </div> 
+
+            </div>
+        </div>
+    </div>
+
+
+<style>
+    .gsc-search-button-v2 {
+        font-size: 0;
+        padding: 6px 27px;
+        width: auto;
+        vertical-align: middle;
+        border: 1px solid #666;
+        border-radius: 2px;
+        border-color: #18191b;
+        background-color: #111213;
+        background-image: linear-gradient(top, #010102, #0f1216);
+    }
+
+    
+</style>
+
+{% endblock %}

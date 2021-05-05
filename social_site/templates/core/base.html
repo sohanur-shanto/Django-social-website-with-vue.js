@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+    <head>
+      
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Triller</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    </head>
+
+    <body>
+
+        <nav class="navbar is-danger" role="navigation">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-item"><strong>Triller</strong></a>
+
+                <a class="navbar-burger">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div class="navbar-menu">
+            
+                 <div class="navbar-start">
+                    <div class="navbar-item">
+                        <form method="get" action="">
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <input type="text" class="input" placeholder="Search" name="query">
+                                </div>
+                                <div class="control">
+                                    <button class="button is-dark"> Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
+                
+                
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                        {% if request.user.is_authenticated %}
+
+                            <a href="{% url 'feed' %}" class="navbar-item">Timeline</a>
+                            <a href="{% url 'oinkerprofile' request.user.username %}" class="navbar-item">Profile</a>
+                            <a href="{% url 'search' %}" class="navbar-item">Search</a>
+
+                        {% endif %}
+                        <div class="navbar-item">
+                            <div class="buttons">
+
+                            
+                            {% if request.user.is_authenticated %}
+
+                                <a href="{% url 'logout' %}" class="button is-dark"><strong>Log out</strong></a>
+                                
+                            {% else %}
+                                
+
+                                <a href="{% url 'signup' %}" class="button is-success"><strong>Sign up</strong></a>
+                                <a href="{% url 'login' %}" class="button is-dark">Log in</a>
+
+                            {% endif %}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+                {% comment %} 
+
+                <!-- <div class="navbar-end">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'notifications' %}" class="navbar-item">Notifications ({{ notifications.count }})</a>
+                        <a href="{% url 'feed' %}" class="navbar-item">Feed</a>
+                        <a href="{% url 'conversations' %}" class="navbar-item">Conversations</a>
+                        <a href="{% url 'oinkerprofile' request.user.username %}" class="navbar-item">Profile</a>
+                        <a href="{% url 'edit_profile' %}" class="navbar-item">Edit profile</a>
+                    {% endif %}
+
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            {% if request.user.is_authenticated %}
+                                <a href="{% url 'logout' %}" class="button is-danger">Log out</a>
+                            {% else %}
+                                <a href="{% url 'signup' %}" class="button is-success"><strong>Sign up</strong></a>
+                                <a href="{% url 'login' %}" class="button is-light">Log in</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav> -->
+        <!-- End Nav --> {% endcomment %}
+    </div>
+</nav>
+
+
+        <section class="section">
+            {% block content %}
+            {% endblock %}
+        </section>
+       
+        <!-- End Content -->
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        {% block script %}
+        {% endblock %}
+        <!-- End Scripts -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">var scrolltotop={setting:{startline:100,scrollto:0,scrollduration:1e3,fadeduration:[500,100]},controlHTML:'<img src="https://i1155.photobucket.com/albums/p559/scrolltotop/arrow36.png" />',controlattrs:{offsetx:5,offsety:5},anchorkeyword:"#top",state:{isvisible:!1,shouldvisible:!1},scrollup:function(){this.cssfixedsupport||this.$control.css({opacity:0});var t=isNaN(this.setting.scrollto)?this.setting.scrollto:parseInt(this.setting.scrollto);t="string"==typeof t&&1==jQuery("#"+t).length?jQuery("#"+t).offset().top:0,this.$body.animate({scrollTop:t},this.setting.scrollduration)},keepfixed:function(){var t=jQuery(window),o=t.scrollLeft()+t.width()-this.$control.width()-this.controlattrs.offsetx,s=t.scrollTop()+t.height()-this.$control.height()-this.controlattrs.offsety;this.$control.css({left:o+"px",top:s+"px"})},togglecontrol:function(){var t=jQuery(window).scrollTop();this.cssfixedsupport||this.keepfixed(),this.state.shouldvisible=t>=this.setting.startline?!0:!1,this.state.shouldvisible&&!this.state.isvisible?(this.$control.stop().animate({opacity:1},this.setting.fadeduration[0]),this.state.isvisible=!0):0==this.state.shouldvisible&&this.state.isvisible&&(this.$control.stop().animate({opacity:0},this.setting.fadeduration[1]),this.state.isvisible=!1)},init:function(){jQuery(document).ready(function(t){var o=scrolltotop,s=document.all;o.cssfixedsupport=!s||s&&"CSS1Compat"==document.compatMode&&window.XMLHttpRequest,o.$body=t(window.opera?"CSS1Compat"==document.compatMode?"html":"body":"html,body"),o.$control=t('<div id="topcontrol">'+o.controlHTML+"</div>").css({position:o.cssfixedsupport?"fixed":"absolute",bottom:o.controlattrs.offsety,right:o.controlattrs.offsetx,opacity:0,cursor:"pointer"}).attr({title:"Scroll to Top"}).click(function(){return o.scrollup(),!1}).appendTo("body"),document.all&&!window.XMLHttpRequest&&""!=o.$control.text()&&o.$control.css({width:o.$control.width()}),o.togglecontrol(),t('a[href="'+o.anchorkeyword+'"]').click(function(){return o.scrollup(),!1}),t(window).bind("scroll resize",function(t){o.togglecontrol()})})}};scrolltotop.init();</script>
+
+
+<script type="text/javascript">
+      (function () {
+          var options = {
+              whatsapp: "8801679609289", // WhatsApp number
+              email: "sohanur.shanto@northsouth.edu", // Email
+              call_to_action: "Message me", // Call to action
+              button_color: "#006AFF", // Color of button
+              position: "right", // Position may be 'right' or 'left'
+              order: "email,whatsapp", // Order of buttons
+          };
+          var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+          var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+          s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+          var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+      })();
+</script>
+    </body>
+</html>

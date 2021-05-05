@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+
+<center>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-12">
+                    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+                    
+                
+                <h1 class="title"><i class='fas fa-address-book' style='font-size:36px'><u>{{ user.username }}</u></i></h1>
+                <p> <a href="{% url 'followers' user.username %}"> Followers: {{ user.oinkerprofile.followed_by.count }}</a></p>
+                <p><a href="{% url 'follows' user.username %}"> Following: {{ user.oinkerprofile.follows.count }}</a></p>
+
+
+                
+                {% if user != request.user %}
+
+                    
+                    {% if request.user.oinkerprofile in user.oinkerprofile.followed_by.all %}
+                    <a href="{% url 'unfollow_oinker' user.username %}" class="button is-dark mt-5">Unfollow</a>
+
+                    {% else %}
+                    <a href="{% url 'follow_oinker' user.username %}" class="button is-dark mt-5">Follow</a>                 
+                    {% endif %}    
+                    
+                {% endif %}
+                    
+            </div>
+        </div>
+    </center>
+
+
+<center>
+        <div class="columns">
+            <div class="column is-12">
+                <div class="wrapper-oinks">
+                    {% for oink in user.oinks.all %}
+                <div class="oink">
+                    <p class="name">Trill by - {{ oink.created_by.username }} <p class="info"> {{ oink.created_at|naturaltime}}</p></p>
+                    <p class="mt-5">{{ oink.body }}</p>
+            
+                    
+                    
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</center>
+
+    {% endblock %}
